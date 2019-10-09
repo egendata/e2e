@@ -29,7 +29,7 @@ describe('Authentication', () => {
 
   it('Client provides a proper auth url and id', async () => {
     const { url, id } = await client.initializeAuthentication()
-    expect(url).toEqual(expect.stringContaining('mydata://account'))
+    expect(url).toEqual(expect.stringContaining('egendata://account'))
     expect(id).toMatch(v4Regexp)
   })
 
