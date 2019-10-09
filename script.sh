@@ -39,7 +39,7 @@ echo 'Sleep 3 seconds'
 sleep 3
 
 echo 'Run migrations for operator postgres'
-DATABASE_URL=postgres://postgresuser:postgrespassword@localhost:5435/mydata \
+DATABASE_URL=postgres://postgresuser:postgrespassword@localhost:5435/egendata \
 npm --prefix ../operator run migrate up
 
 export PUBLIC_KEY="-----BEGIN RSA PUBLIC KEY-----

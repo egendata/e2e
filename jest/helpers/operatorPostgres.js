@@ -12,14 +12,14 @@ const createOperatorDb = async () => {
     const client = getClient('postgres')
 
     await client.connect()
-    await client.query('DROP DATABASE mydata')
-    await client.query('CREATE DATABASE mydata')
+    await client.query('DROP DATABASE egendata')
+    await client.query('CREATE DATABASE egendata')
     await client.end()
 
     await runner({
       dir,
       direction: 'up',
-      databaseUrl: `${connectionString}/mydata`,
+      databaseUrl: `${connectionString}/egendata`,
       migrationsTable: 'pgmigrations',
       log: () => undefined
     })
@@ -33,7 +33,7 @@ const dropOperatorDb = async () => {
     const client = getClient('postgres')
 
     await client.connect()
-    await client.query('DROP DATABASE mydata')
+    await client.query('DROP DATABASE egendata')
   } catch (e) {
     console.error('Error dropping Operator DB! \nMake sure to close any other open connections to it.', e)
   }
@@ -41,7 +41,7 @@ const dropOperatorDb = async () => {
 
 const clearOperatorDb = async () => {
   try {
-    const client = getClient('mydata')
+    const client = getClient('egendata')
 
     await client.connect()
     await Promise.all([
@@ -58,7 +58,7 @@ const clearOperatorDb = async () => {
 }
 
 const queryOperatorDb = async (sql, params = []) => {
-  const client = new Client(`${connectionString}/mydata`)
+  const client = new Client(`${connectionString}/egendata`)
   await client.connect()
   try {
     const result = await client.query(sql, params)
