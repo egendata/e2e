@@ -1,0 +1,47 @@
+{
+  "name": "egendata-e2e",
+  "version": "0.26.0",
+  "description": "End-to-end testing for Egendata",
+  "main": "index.js",
+  "scripts": {
+    "test": "./script.sh",
+    "test-e2e": "cypress run",
+    "test-e2e:open": "cypress open",
+    "test-integration": "jest --runInBand --verbose --color",
+    "test-integration:local": "OPERATOR_URL=http://localhost:3000 OPERATOR_PGPORT=5432 jest --runInBand --verbose",
+    "test-integration:local:watch": "OPERATOR_URL=http://localhost:3000 OPERATOR_PGPORT=5432 jest --runInBand --verbose --watchAll",
+    "lint": "eslint '**/*.js'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JobtechSwe/mydata.git"
+  },
+  "contributors": [
+    "Adam Näslund <adam.naslund@iteam.se>",
+    "Einar Persson <einar.persson@iteam.se>",
+    "Johan Öbrink <johan.obrink@iteam.se>",
+    "Alexander Czigler <alexander@iteam.se>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JobtechSwe/mydata/issues"
+  },
+  "homepage": "https://github.com/JobtechSwe/mydata#readme",
+  "devDependencies": {
+    "axios": "^0.18.1",
+    "cypress": "^3.6.0",
+    "eslint": "^5.16.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-cypress": "^2.2.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^22.17.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "express": "^4.17.1",
+    "jest": "^24.9.0",
+    "jsonwebtoken": "^8.5.1",
+    "node-pg-migrate": "^3.21.1",
+    "pg": "^7.11.0"
+  }
+}
