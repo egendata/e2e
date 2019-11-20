@@ -39,17 +39,9 @@ echo 'Sleep 3 seconds'
 sleep 3
 
 echo 'Run migrations for operator postgres'
-DATABASE_URL=postgres://postgresuser:postgrespassword@localhost:5435/egendata \
+PGPORT=5435 \
+PGDATABASE=egendata \
 npm --prefix ../operator run migrate up
-
-export PUBLIC_KEY="-----BEGIN RSA PUBLIC KEY-----
-MIIBCgKCAQEAqBSF/c7PshMQzyJrwIiRs1tBv9V2+GtM/b83hJrMw628aCEmc5Y7
-eVo5kYKxcuV2EQvlZdGzbWYlySeCh/cjA6xv+mm1cnri3ENAsO1CTSmliNOfOO5W
-uhj3LI+uwjMyZPo77uixHUOV164hgq2wX5AAQoDEeHMgiT0pjnYh+/AhL4Yyt/OO
-b2C06fXC1/8S8mOd0FeFN+6zMw8chNkSpyLFidT92pCcpLphNEY5lABfDtN9ZbYr
-k5AKdKfLNz+X+oStlROtk2fRJnWkw4h4749NCeKbaxCksNPKefzJqd7Q9eyeD7l8
-P8pjtG3Pd810E6GY0IPYVv/mFhsUdDb3fwIDAQAB
------END RSA PUBLIC KEY-----"
 
 export PRIVATE_KEY="-----BEGIN RSA PRIVATE KEY-----
 MIIEowIBAAKCAQEAqBSF/c7PshMQzyJrwIiRs1tBv9V2+GtM/b83hJrMw628aCEm
@@ -82,10 +74,14 @@ C8QryBR3Wo6wHAXgIQBnvKTHBXIBCboDc0s1y9U/wXwcIVBp/sJJ
 # Start operator
 cd ../operator || exit 2
 PGPORT=5435 \
+PGUSER=postgresuser \
+PGPASSWORD=postgrespassword \
+PGDATABASE=egendata \
+DATABASE_URL=postgres://postgresuser:postgrespassword@localhost:5435/egendata \
 HOST=http://localhost:3001 \
 PORT=3001 \
 REDIS=redis://:fubar@localhost:6381/ \
-NODE_ENV=development \
+NODE_ENV=production \
 APM_SERVER='' \
 node ../operator/lib/server.js &
 OPERATOR_PID=$!
@@ -97,14 +93,14 @@ npm --prefix ../app run e2e:build
 # Start app server
 cd ../app || exit 2
 PORT=1338 \
-OPERATOR_URL=http://localhost:3001/api \
+OPERATOR_URL=http://localhost:3001 \
 NODE_ENV=development \
 node __e2e__/dist/index.js &
 APP_SERVER_PID=$!
 cd ../e2e || exit 2
 
 # Start CV
-cd ../examples/cv || exit 2
+cd ../example-cv || exit 2
 REDIS=redis://:fubar@localhost:6382/ \
 CLIENT_ID=http://localhost:4001 \
 PORT=4001 \
@@ -112,7 +108,7 @@ OPERATOR_URL=http://localhost:3001 \
 APM_SERVER='' \
 node server.js &
 CV_PID=$!
-cd ../../e2e || exit 2
+cd ../e2e || exit 2
 
 # Wait for operator, app-server and CV
 waitfor http://localhost:3001/health
