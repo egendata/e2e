@@ -55,6 +55,17 @@ services:
     # networks:
     #   - mydata
 
+  app:
+    image: jobtechswe/mydata-app:latest
+    volumes:
+      - ../app:/app
+    ports:
+      - 1338:1338
+    working_dir: /app
+    environment:
+      - OPERATOR_URL=http://localhost:3001
+      - PORT=1338
+
   # cv:
   #   image: node:12.5.0-alpine
   #   volumes:
