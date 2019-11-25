@@ -60,10 +60,10 @@ CYPRESS_baseUrl=http://localhost:4000 CYPRESS_APP_SERVER_URL=http://localhost:13
 EXIT_CODE=$?
 
 # Run integration tests
-# echo 'Running integration tests'
-# OPERATOR_PGPORT=5435 OPERATOR_URL=http://localhost:3000 APP_SERVER_URL=http://localhost:1338 npm run test-integration
-# if [ $EXIT_CODE = 0 ]; then
-#   EXIT_CODE=$?
-# fi
+echo 'Running integration tests'
+DOCKER=true OPERATOR_PGPORT=5435 OPERATOR_URL=http://localhost:3000 APP_SERVER_URL=http://localhost:1338 npm run test-integration
+if [ $EXIT_CODE = 0 ]; then
+  EXIT_CODE=$?
+fi
 
 cleanup
