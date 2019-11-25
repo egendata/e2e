@@ -5,6 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "./script.sh",
+    "test:local": "npm run test -- app cv operator",
+    "test:local:operator": "npm run test -- operator",
+    "test:local:app": "npm run test -- app",
+    "test:local:cv": "npm run test -- cv",
     "test-e2e": "cypress run",
     "test-e2e:open": "cypress open",
     "test-integration": "jest --runInBand --verbose --color",
