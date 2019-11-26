@@ -28,6 +28,15 @@ echo '**** Running script for e2e & integration tests ****'
 export DC_U=$(id -u)
 export DC_G=$(id -g)
 
+if type ip 2>/dev/null; then
+  export HOST_IP="$(ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+')"
+elif type ipconfig 2>/dev/null; then
+  export HOST_IP="$(ipconfig getifaddr en0)"
+elif [ -z "$HOST_IP" ]; then
+  echo "HOST_IP environment variable is required"
+  exit 8
+fi
+
 operator=""
 cv=""
 app=""
