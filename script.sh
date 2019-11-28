@@ -60,6 +60,18 @@ docker-compose down
 docker-compose -f docker-compose.yml $operator $cv $app up -d
 echo 'Docker containers are up'
 
+if [[ ! -z "$operator" ]]; then
+  docker cp ../operator e2e_operator_1:/app && docker exec e2e_operator_1 sh -c "node wait-for-postgres && npm run migrate up" && docker exec -d e2e_operator_1 npm start
+fi
+
+if [[ ! -z "$cv" ]]; then
+  docker cp ../example-cv e2e_cv_1:/app && docker exec e2e_cv_1 npm run build && docker exec -d e2e_cv_1 npm start
+fi
+
+if [[ ! -z "$app" ]]; then
+  docker cp ../app e2e_app_1:/app && docker exec e2e_app_1 npm run e2e:build && docker exec -d e2e_app_1 npm run e2e:start
+fi
+
 echo 'Sleep 3 seconds'
 sleep 3
 
