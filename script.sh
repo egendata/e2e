@@ -1,5 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 EXIT_CODE=0
+wait_for_seconds=60
 
 cleanup() {
   docker-compose down
@@ -19,8 +20,12 @@ waitfor() {
       echo
       return 0
     fi
-
+    ((i++))
     sleep 1
+    if [[ i -eq wait_for_seconds ]]; then
+      >&2 echo "ERROR: $1 is not up after $wait_for_seconds seconds"
+      exit 2
+    fi
   done
 }
 
@@ -28,12 +33,12 @@ echo '**** Running script for e2e & integration tests ****'
 export DC_U=$(id -u)
 export DC_G=$(id -g)
 
-if type ip 2>/dev/null; then
+if type ip &>/dev/null; then
   export HOST_IP="$(ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+')"
-elif type ipconfig 2>/dev/null; then
+elif type ipconfig &>/dev/null; then
   export HOST_IP="$(ipconfig getifaddr en0)"
 elif [ -z "$HOST_IP" ]; then
-  echo "HOST_IP environment variable is required"
+  >&2 echo "ERROR: HOST_IP environment variable is required"
   exit 8
 fi
 
@@ -46,7 +51,7 @@ while [ $# -ne 0 ]; do
     "operator") operator="-f ./docker-overrides/operator.yml"; shift 1;;
     "cv") cv="-f ./docker-overrides/example-cv.yml"; shift 1;;
     "app") app="-f ./docker-overrides/app.yml"; shift 1;;
-    *) >&2 echo "$1 is invalid override"; exit 8;;
+    *) >&2 echo "ERROR: $1 is invalid override"; exit 8;;
   esac
 done
 
