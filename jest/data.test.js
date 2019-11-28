@@ -5,8 +5,6 @@ const postgres = require('./helpers/operatorPostgres')
 describe('data', () => {
   let serviceClient, connectionId
   beforeAll(async () => {
-    // Init Operator DB
-    await postgres.createOperatorDb()
     await phone.clearAccount()
 
     await phone.createAccount({ firstName: 'Foo', lastName: 'Barsson' })

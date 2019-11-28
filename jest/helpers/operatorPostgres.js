@@ -1,43 +1,7 @@
-const runner = require('node-pg-migrate')
 const { Client } = require('pg')
-const path = require('path')
 
 const connectionString = `postgres://postgresuser:postgrespassword@localhost:${process.env.OPERATOR_PGPORT}`
-const dir = path.resolve(__dirname, '../../../operator/migrations')
-
 const getClient = (schema) => new Client(`${connectionString}/${schema}`)
-
-const createOperatorDb = async () => {
-  try {
-    const client = getClient('postgres')
-
-    await client.connect()
-    await client.query('DROP DATABASE egendata')
-    await client.query('CREATE DATABASE egendata')
-    await client.end()
-
-    await runner({
-      dir,
-      direction: 'up',
-      databaseUrl: `${connectionString}/egendata`,
-      migrationsTable: 'pgmigrations',
-      log: () => undefined
-    })
-  } catch (e) {
-    console.error('Error creating Operator DB! \nMake sure to close any other open connections to it.', e)
-  }
-}
-
-const dropOperatorDb = async () => {
-  try {
-    const client = getClient('postgres')
-
-    await client.connect()
-    await client.query('DROP DATABASE egendata')
-  } catch (e) {
-    console.error('Error dropping Operator DB! \nMake sure to close any other open connections to it.', e)
-  }
-}
 
 const clearOperatorDb = async () => {
   try {
@@ -69,8 +33,6 @@ const queryOperatorDb = async (sql, params = []) => {
 }
 
 module.exports = {
-  createOperatorDb,
-  dropOperatorDb,
   clearOperatorDb,
   queryOperatorDb
 }

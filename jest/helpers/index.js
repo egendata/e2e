@@ -1,4 +1,4 @@
-const { create, utils: { createMemoryStore } } = require('../../../client/lib')
+const { create, utils: { createMemoryStore } } = require('@egendata/client')
 const express = require('express')
 const ipHelper = require('./ip')
 
