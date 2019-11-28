@@ -4,7 +4,6 @@ const postgres = require('./helpers/operatorPostgres')
 
 describe('Account', () => {
   beforeAll(async () => {
-    await postgres.createOperatorDb()
     await phone.clearStorage()
   })
   afterEach(async () => {

@@ -6,7 +6,6 @@ describe('Service', () => {
   let server, client
 
   beforeAll(async () => {
-    await postgres.createOperatorDb()
     const app = express()
     await new Promise((resolve, reject) => {
       server = app.listen(0, (err) => {

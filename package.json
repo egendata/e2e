@@ -32,6 +32,8 @@
   },
   "homepage": "https://github.com/JobtechSwe/mydata#readme",
   "devDependencies": {
+    "@egendata/client": "^1.0.1",
+    "@egendata/messaging": "^0.6.1",
     "axios": "^0.18.1",
     "cypress": "^3.4.1",
     "eslint": "^5.16.0",
@@ -45,7 +47,6 @@
     "express": "^4.17.1",
     "jest": "^24.9.0",
     "jsonwebtoken": "^8.5.1",
-    "node-pg-migrate": "^3.21.1",
     "pg": "^7.11.0"
   }
 }

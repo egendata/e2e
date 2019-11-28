@@ -1,23 +1,22 @@
 const phone = require('./helpers/phone')
 const { createClientWithServer } = require('./helpers/index')
 const postgres = require('./helpers/operatorPostgres')
-const { JWK, JWK_PRIVATE } = require('../../messaging/lib/schemas')
+const { JWK, JWK_PRIVATE } = require('@egendata/messaging').schemas
 
 jest.useFakeTimers()
 
 describe('Permissions', () => {
   beforeAll(async () => {
     await phone.clearStorage()
-    await postgres.createOperatorDb()
   })
 
   beforeEach(async () => {
+    await postgres.clearOperatorDb()
     await phone.createAccount({ firstName: 'Foo', lastName: 'Barsson' })
   })
 
   afterEach(async () => {
     await phone.clearStorage()
-    await postgres.createOperatorDb()
   })
 
   it('correctly stores default READ permissions', async (done) => {
