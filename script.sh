@@ -60,15 +60,15 @@ docker-compose down
 docker-compose -f docker-compose.yml $operator $cv $app up -d
 echo 'Docker containers are up'
 
-if [[ ! -z "$operator" ]]; then
+if [[ -n "$operator" ]]; then
   docker cp ../operator e2e_operator_1:/app && docker exec e2e_operator_1 sh -c "node wait-for-postgres && npm run migrate up" && docker exec -d e2e_operator_1 npm start
 fi
 
-if [[ ! -z "$cv" ]]; then
+if [[ -n "$cv" ]]; then
   docker cp ../example-cv e2e_cv_1:/app && docker exec e2e_cv_1 npm run build && docker exec -d e2e_cv_1 npm start
 fi
 
-if [[ ! -z "$app" ]]; then
+if [[ -n "$app" ]]; then
   docker cp ../app e2e_app_1:/app && docker exec e2e_app_1 npm run e2e:build && docker exec -d e2e_app_1 npm run e2e:start
 fi
 
@@ -88,8 +88,9 @@ EXIT_CODE=$?
 # Run integration tests
 echo 'Running integration tests'
 DOCKER=true OPERATOR_PGPORT=5435 OPERATOR_URL=http://localhost:3000 APP_SERVER_URL=http://localhost:1338 npm run test-integration
-if [ $EXIT_CODE = 0 ]; then
-  EXIT_CODE=$?
+INTEGRATION_EXIT=$?
+if [[ $EXIT_CODE -eq 0 ]]; then
+  EXIT_CODE=$INTEGRATION_EXIT
 fi
 
 cleanup
