@@ -33,7 +33,7 @@
   "homepage": "https://github.com/JobtechSwe/mydata#readme",
   "devDependencies": {
     "@egendata/client": "^1.0.1",
-    "@egendata/messaging": "^0.6.1",
+    "@egendata/messaging": "^0.6.2",
     "axios": "^0.18.1",
     "cypress": "^3.4.1",
     "eslint": "^5.16.0",
