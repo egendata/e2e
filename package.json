@@ -34,7 +34,7 @@
   "devDependencies": {
     "@egendata/client": "1.2.0",
     "@egendata/messaging": "0.8.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.0",
     "cypress": "^4.11.0",
     "eslint": "^7.6.0",
     "eslint-config-standard": "^14.1.1",
