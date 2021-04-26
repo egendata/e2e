@@ -36,7 +36,7 @@
     "@egendata/messaging": "0.8.0",
     "axios": "^0.19.2",
     "cypress": "^4.11.0",
-    "eslint": "^7.6.0",
+    "eslint": "^7.25.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-cypress": "^2.11.1",
     "eslint-plugin-import": "^2.22.0",
